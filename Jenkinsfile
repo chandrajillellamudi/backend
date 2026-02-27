@@ -7,15 +7,23 @@ pipeline {
                 timeout(time: 1, unit: 'HOURS')
                 disableConcurrentBuilds() 
             }
-    // environment {
-    //     DEPLOY_TO = 'production'
-    //     GREETINGS = 'Chandra'
-    // }
+    environment {
+      def AppVersion = ''
+    }
     stages {
+        stage ('read the version') {
+            script {
+                def packageJson = readJSON file: 'package.json'
+                AppVersion = packageJson.version
+                echo "Application Version: $AppVersion"
+            }
+        }
         stage('Install dependencies') {
             steps {
                 sh """
                 npm install
+                ls -ltr
+                echo "AppVersion:${AppVersion}"
                 """
         }
     }
