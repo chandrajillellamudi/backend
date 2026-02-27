@@ -12,9 +12,11 @@ pipeline {
     //     GREETINGS = 'Chandra'
     // }
     stages {
-        stage('Test') {
+        stage('Install dependencies') {
             steps {
-                sh 'echo this is TEST'
+                sh """
+                npm install
+                """
         }
     }
     }
