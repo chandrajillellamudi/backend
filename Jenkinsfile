@@ -10,6 +10,7 @@ pipeline {
             }
     environment {
       def AppVersion = ''
+      nexusURL = 'nexus.chandradevops.online:8081'
     }
     stages {
         stage ('read the version') {
@@ -38,6 +39,27 @@ pipeline {
                 """
         }
     }
+        stage('Nexus Artifact Upload'){
+            steps {
+                script {
+                    nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${nexusURL}",
+                    groupId: 'com.expense',
+                    version: "${AppVersion}",
+                    repository: 'backend',
+                    credentialsId: 'nexus_auth',
+                    artifacts: [
+                        [artifactId: "backend",
+                        classifier: '',
+                        file: 'backend-' + "${AppVersion}" + '.zip',
+                        type: 'zip']
+                    ]
+                )
+                }
+            }
+        }
 
     }
      post { 
