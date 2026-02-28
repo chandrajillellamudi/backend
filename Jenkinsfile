@@ -61,6 +61,14 @@ pipeline {
             }
         }
 
+        stage('Deploy'){
+            steps {
+                script {
+                        build job: 'metamorphant/deploy/feature%2FPadd-jwt-tokens', parameters: [string(name: 'targetEnvironment', value: 'stage')], propagate: false
+                }
+            }
+        }
+
     }
      post { 
         always { 
