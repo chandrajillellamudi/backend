@@ -63,8 +63,11 @@ pipeline {
 
         stage('Deploy'){
             steps {
+                def params = [
+                    string(name: 'AppVersion', value:"${AppVersion}" )
+                ]
                 script {
-                        build job: 'metamorphant/deploy/feature%2FPadd-jwt-tokens', parameters: [string(name: 'targetEnvironment', value: 'stage')], propagate: false
+                        build job: 'backend-deploy', parameters: params , wait: false
                 }
             }
         }
