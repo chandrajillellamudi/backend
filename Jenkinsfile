@@ -11,9 +11,6 @@ pipeline {
     environment {
       def AppVersion = ''
       nexusURL = 'nexus.chandradevops.online:8081'
-       def params = [
-                    string(name: 'AppVersion', value:"${AppVersion}" )
-                ]
     }
     stages {
         stage ('read the version') {
@@ -67,6 +64,9 @@ pipeline {
         stage('Deploy'){
             steps {
                 script {
+                    def params = [
+                    string(name: 'AppVersion', value:"${AppVersion}" )
+                ]
                         build job: 'backend-deploy', parameters: params , wait: false
                 }
             }
