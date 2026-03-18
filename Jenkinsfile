@@ -6,7 +6,7 @@ pipeline {
                
                 timeout(time: 1, unit: 'HOURS')
                 disableConcurrentBuilds() 
-                //ansiColor('xterm')
+                ansiColor('xterm')
             }
     environment {
       def AppVersion = ''
